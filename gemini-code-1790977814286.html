@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Capítulo 17: Jerarquía | El Lugar de Su Presencia</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #F4F1EA;
+            color: #1E293B;
+            line-height: 1.5;
+            -webkit-tap-highlight-color: transparent;
+            padding-bottom: 95px;
+        }
+        header {
+            background: linear-gradient(135deg, #0F294A 0%, #1E293B 50%, #7C2D12 100%);
+            color: #ffffff;
+            padding: 22px 16px;
+            text-align: center;
+            border-bottom: 4px solid #C2410C;
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        header h1 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin: 6px 0 2px 0;
+            color: #ffffff;
+            line-height: 1.25;
+        }
+        header p {
+            font-size: 0.8rem;
+            color: #FED7AA;
+            font-weight: 300;
+        }
+        .badge {
+            display: inline-block;
+            background-color: rgba(217, 119, 6, 0.25);
+            color: #FDE68A;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid rgba(217, 119, 6, 0.4);
+        }
+        main {
+            max-width: 720px;
+            margin: 16px auto;
+            padding: 0 12px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #E2E8F0;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+        .card h2, .card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #0F294A;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .info-box {
+            background: linear-gradient(90deg, #EFF6FF 0%, #FFF7ED 100%);
+            border-left: 4px solid #C2410C;
+            padding: 12px;
+            border-radius: 0 12px 12px 0;
+            font-size: 0.8rem;
+            color: #1E293B;
+            margin-top: 10px;
+        }
+        label {
+            display: block;
+            font-size: 0.825rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 4px;
+            line-height: 1.35;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #CBD5E1;
+            font-size: 16px !important;
+            background-color: #FAFAFA;
+            margin-top: 4px;
+            margin-bottom: 8px;
+            font-family: inherit;
+        }
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #C2410C;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(194, 65, 12, 0.15);
+        }
+        .radio-tile-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .radio-tile {
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #FAFAFA;
+            font-size: 0.825rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 48px;
+        }
+        .radio-tile input { accent-color: #C2410C; }
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #E2E8F0;
+            background-color: #FAFAFA;
+            margin-bottom: 6px;
+            font-size: 0.78rem;
+        }
+        .checkbox-item input {
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            accent-color: #C2410C;
+        }
+        .btn-whatsapp {
+            width: 100%;
+            background-color: #059669;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+        .sticky-bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(15, 23, 42, 0.96);
+            backdrop-filter: blur(8px);
+            padding: 10px 14px;
+            border-top: 1px solid #334155;
+            z-index: 50;
+        }
+        #toast {
+            position: fixed;
+            bottom: 80px;
+            left: 16px;
+            right: 16px;
+            background-color: #0F172A;
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+            display: none;
+            z-index: 100;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="badge">
+            <i class="fa-solid fa-users"></i> Grupo de Conexión
+        </div>
+        <h1>Taller de Matrimonios: "Amor y Respeto"</h1>
+        <p>Iglesia El Lugar de Su Presencia &bull; Red de Parejas con Hijos Adultos</p>
+        <div style="margin-top: 8px; font-size: 0.725rem; color: #FDE68A; opacity: 0.9;">
+            <span><i class="fa-regular fa-bookmark"></i> Capítulo 17</span> &bull; 
+            <span><i class="fa-solid fa-shield-halved text-amber-400"></i> "Jerarquía: Proteger y Proveer"</span>
+        </div>
+    </header>
+
+    <main>
+
+        <div class="card">
+            <h2>
+                <span><i class="fa-solid fa-shield-halved" style="color: #C2410C;"></i> JERARQUÍA EN EL HOGAR</span>
+            </h2>
+            <p style="font-size: 0.825rem; color: #334155; margin-bottom: 8px;">
+                <strong>Capítulo 17:</strong> “Jerarquía: valore su deseo de proteger y proveer”.
+            </p>
+            <div class="info-box">
+                <p style="font-weight: 700; color: #0F294A;">💡 Principio Fundamental:</p>
+                <p>El <strong>Respeto</strong> incondicional para el <strong>Esposo</strong> no es arrogancia; el <strong>Respeto</strong> es su lenguaje de <strong>Amor</strong>.</p>
+            </div>
+        </div>
+
+        <form id="evaluationForm" onsubmit="event.preventDefault();">
+
+            <!-- DATOS DE REGISTRO -->
+            <div class="card">
+                <h3>
+                    <span>Datos de Registro</span>
+                    <span style="font-size: 0.7rem; color: #C2410C;">* Obligatorio</span>
+                </h3>
+
+                <div style="margin-bottom: 12px;">
+                    <label>Usted es: *</label>
+                    <div class="radio-tile-group">
+                        <label class="radio-tile">
+                            <input type="radio" name="rol" value="Esposo" required> Esposo (Azul)
+                        </label>
+                        <label class="radio-tile">
+                            <input type="radio" name="rol" value="Esposa" required> Esposa (Rosa)
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="nombre">Tu Nombre Completo *</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Ingresa tu nombre y apellido...">
+                </div>
+
+                <div>
+                    <label for="conyuge">Nombre de tu Cónyuge *</label>
+                    <input type="text" id="conyuge" name="conyuge" required placeholder="Nombre de tu cónyuge...">
+                </div>
+            </div>
+
+            <!-- PREGUNTAS CAPÍTULO 17 -->
+            <div class="card">
+                <h3 style="color: #9A3412; border-bottom: 1px solid #FED7AA; padding-bottom: 6px;">
+                    Preguntas del Capítulo 17
+                </h3>
+
+                <!-- P1 -->
+                <div style="margin-bottom: 16px;">
+                    <label>1. Jerarquía es organizar según rango, capacidad y autoridad. Cuando lee la frase “Jerarquía en el matrimonio”, ¿qué es lo primero que le viene a la mente? Marque una respuesta:</label>
+                    <div style="display: grid; gap: 6px; font-size: 0.78rem; margin-top: 6px;">
+                        <label><input type="radio" name="q1_jerarquia" value="A. Políticamente incorrecto"> A. Políticamente incorrecto</label>
+                        <label><input type="radio" name="q1_jerarquia" value="B. Los hombres se creen superiores"> B. Los hombres se creen superiores</label>
+                        <label><input type="radio" name="q1_jerarquia" value="C. El plan de Dios es bueno, pero los hombres abusan"> C. El plan de Dios es bueno, pero los hombres abusan</label>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #64748B; margin-top: 6px;">D. Yo pienso:</p>
+                    <textarea name="q1_propia" rows="2" placeholder="Escriba su pensamiento propio..."></textarea>
+                </div>
+
+                <!-- P2 -->
+                <div style="margin-bottom: 16px;">
+                    <label>2. Según Efesios 5:22-23: ¿Qué clase de jerarquía planeó Dios para el matrimonio? ¿A qué llama Dios al <strong>Esposo</strong>? ¿A qué llama Dios a la <strong>Esposa</strong>?</label>
+                    <textarea name="q2" rows="2" placeholder="Escriba su respuesta bíblica..."></textarea>
+                </div>
+
+                <!-- P3 -->
+                <div style="margin-bottom: 16px;">
+                    <label>3. Esposa: ¿Cómo ve a su <strong>Esposo</strong> en su rol de “cabeza” de la familia? ¿Cuál de estas afirmaciones se acerca más a la forma en que usted lo describiría?</label>
+                    <div style="display: grid; gap: 6px; font-size: 0.78rem; margin-top: 6px;">
+                        <label><input type="radio" name="q3_esposa" value="A. Me siento cómoda con mi Esposo como “cabeza”. Hace un buen trabajo."> A. Me siento cómoda con mi <strong>Esposo</strong> como “cabeza”. Hace un buen trabajo.</label>
+                        <label><input type="radio" name="q3_esposa" value="B. Estoy de acuerdo con que él sea la “cabeza”, pero yo desearía aportar más."> B. Estoy de acuerdo con que él sea la “cabeza”, pero yo desearía aportar más.</label>
+                        <label><input type="radio" name="q3_esposa" value="C. Estoy de acuerdo con que él sea la “cabeza”, pero si hace lo que yo quiero."> C. Estoy de acuerdo con que él sea la “cabeza”, pero si hace lo que yo quiero.</label>
+                        <label><input type="radio" name="q3_esposa" value="D. No me siento del todo cómoda con mi Esposo como “cabeza”. Él cree que está siendo bíblico, pero a veces me rebaja."> D. No me siento del todo cómoda con mi <strong>Esposo</strong> como “cabeza”. Él cree que está siendo bíblico, pero a veces me rebaja.</label>
+                        <label><input type="radio" name="q3_esposa" value="E. No me siento del todo cómoda con mi Esposo como “cabeza” porque yo no estoy cumpliendo con lo que dice la Biblia."> E. No me siento del todo cómoda con mi <strong>Esposo</strong> como “cabeza” porque yo no estoy cumpliendo con lo que dice la Biblia.</label>
+                    </div>
+                </div>
+
+                <!-- P4 -->
+                <div style="margin-bottom: 16px;">
+                    <label>4. Esposo: ¿Cómo ve su posición dada por Dios como “cabeza” de la familia y de su matrimonio? ¿Cuál de las siguientes afirmaciones describe mejor la forma en que se siente en esa responsabilidad?</label>
+                    <div style="display: grid; gap: 6px; font-size: 0.78rem; margin-top: 6px;">
+                        <label><input type="radio" name="q4_esposo" value="A. Incómodo. Nunca pedí ser la “cabeza”. Pero cuando intento hacer lo que la Biblia dice, no recibo mucho apoyo de mi Esposa."> A. Incómodo. Nunca pedí ser la “cabeza”. Pero cuando intento hacer lo que la Biblia dice, no recibo mucho apoyo de mi <strong>Esposa</strong>.</label>
+                        <label><input type="radio" name="q4_esposo" value="B. Cómodo. Hasta donde yo sé, no me enseñoreo de mi Esposa."> B. Cómodo. Hasta donde yo sé, no me enseñoreo de mi <strong>Esposa</strong>.</label>
+                        <label><input type="radio" name="q4_esposo" value="C. Estoy dispuesto a ser la “cabeza”, pero a veces necesito ayuda."> C. Estoy dispuesto a ser la “cabeza”, pero a veces necesito ayuda.</label>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #64748B; margin-top: 6px;">D. Yo pienso:</p>
+                    <textarea name="q4_propia" rows="2" placeholder="Escriba su pensamiento..."></textarea>
+                </div>
+
+                <!-- P5 -->
+                <div style="margin-bottom: 16px;">
+                    <label>5. ¿Cuáles son algunas de las razones por las que una <strong>Esposa</strong> podría vacilar en ponerse bajo su <strong>Esposo</strong> como “cabeza”? ¿Cuál de los siguientes comentarios se aplicaría a usted y su cónyuge?</label>
+                    <div style="display: grid; gap: 6px; font-size: 0.78rem; margin-top: 6px;">
+                        <label><input type="radio" name="q5_vacilacion" value="A. Él puede ser la cabeza, ¿pero se interesará realmente por mis necesidades?"> A. Él puede ser la cabeza, ¿pero se interesará realmente por mis necesidades?</label>
+                        <label><input type="radio" name="q5_vacilacion" value="B. Quiero que sea la cabeza, pero no demasiado."> B. Quiero que sea la cabeza, pero no demasiado.</label>
+                        <label><input type="radio" name="q5_vacilacion" value="C. Debo dejar que sea la cabeza."> C. Debo dejar que sea la cabeza.</label>
+                        <label><input type="radio" name="q5_vacilacion" value="D. ¿Qué sucede si la cabeza se convierte en un dictador?"> D. ¿Qué sucede si la cabeza se convierte en un dictador?</label>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #64748B; margin-top: 6px;">E. ¿Cuál es mi excusa?:</p>
+                    <textarea name="q5_excusa" rows="2" placeholder="Escriba su excusa o reflexión..."></textarea>
+                </div>
+
+                <!-- P6 -->
+                <div style="margin-bottom: 16px;">
+                    <label>6. “Cómo desinflar o no mostrar respeto a un <strong>Esposo</strong> con cinco palabras” delante de otras personas cuando estaban viendo la casa. Complete esta frase: “Debes ___ ___ ___ ___”. ¿Por qué este comentario puede lastimar tanto a un <strong>Esposo</strong>?</label>
+                    <textarea name="q6" rows="2" placeholder="Complete la frase y explique por qué lastima..."></textarea>
+                </div>
+
+                <!-- P7 -->
+                <div style="margin-bottom: 16px;">
+                    <label>7. La <strong>Esposa</strong>, ¿tenía alguna idea de lo que significaba demostrar <strong>Respeto</strong> a su <strong>Esposo</strong>? (La pregunta que siempre nos debemos hacer es: “¿Lo que estoy a punto de hacer o decir hará sentir a mi <strong>Esposa</strong> poco amada o a mi <strong>Esposo</strong> irrespetado?”):</label>
+                    <textarea name="q7" rows="2" placeholder="Escriba su reflexión..."></textarea>
+                </div>
+
+                <!-- P8 -->
+                <div style="margin-bottom: 16px;">
+                    <label>8. “¿Cuál es la tarjeta que el <strong>Esposo</strong> conservaría para siempre?”. Haga su tarjeta: “Sé que tú morirías por mí. Con todo mi respeto, ___”:</label>
+                    <textarea name="q8" rows="2" placeholder="Escriba el mensaje para la tarjeta..."></textarea>
+                </div>
+
+                <!-- P9 -->
+                <div>
+                    <label>9. Esposa: ¿Cuál de estos consejos prácticos va a hacer para que su <strong>Esposo</strong> sienta que usted aprecia su deseo de PROTEGERLA Y PROVEER para usted?</label>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="q9_items" value="A. Verbalice su admiración por él, por protegerla y por estar dispuesto a morir por usted.">
+                        <span>A. Verbalice su admiración por él, por protegerla y por estar dispuesto a morir por usted.</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="q9_items" value="B. Alabe el compromiso de su esposo de proteger y proveer a usted y a la familia; él necesita saber que usted no lo da por sentado.">
+                        <span>B. Alabe el compromiso de su <strong>Esposo</strong> de proteger y proveer a usted y a la familia; él necesita saber que usted no lo da por sentado.</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="q9_items" value="C. Demuestre empatía cuando él revele su posición masculina sobre el estatus de su trabajo.">
+                        <span>C. Demuestre empatía cuando él revele su posición masculina sobre el estatus de su trabajo.</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="q9_items" value="D. Nunca se burle de la idea de tener un alto concepto de él.">
+                        <span>D. Nunca se burle de la idea de tener un alto concepto de él.</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="q9_items" value="E. Nunca demuestre con lenguaje corporal o con palabras que tiene por menos su trabajo o lo que él hace.">
+                        <span>E. Nunca demuestre con lenguaje corporal o con palabras que tiene por menos su trabajo o lo que él hace.</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="q9_items" value="F. Lista para encender las velas.">
+                        <span>F. Lista para encender las velas.</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="q9_items" value="G. Respete ideas con respecto a las finanzas y ofrezca soluciones sobre cómo reducir los gastos.">
+                        <span>G. Respete ideas con respecto a las finanzas y ofrezca soluciones sobre cómo reducir los gastos.</span>
+                    </div>
+                    <p style="font-size: 0.725rem; color: #7C2D12; margin-top: 4px;">* Los Esposos también deberían ponerse de acuerdo con la Esposa sobre lo que ella quiere recibir.</p>
+                </div>
+            </div>
+
+            <!-- ENVÍO PARA WHATSAPP -->
+            <div class="card" style="background-color: #0F172A; color: #ffffff; border-color: #334155;">
+                <h3 style="color: #34D399; border-bottom-color: #1E293B;">
+                    <span><i class="fa-brands fa-whatsapp"></i> Envío para WhatsApp</span>
+                </h3>
+                <p style="font-size: 0.78rem; color: #CBD5E1; margin-bottom: 12px;">
+                    Al terminar, presiona el botón para copiar tus respuestas con formato especial y pégalas en el chat de tu Grupo de Cuatro.
+                </p>
+
+                <button type="button" class="btn-whatsapp" onclick="copyForWhatsApp()">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem;"></i> Copiar Respuestas para WhatsApp
+                </button>
+            </div>
+
+        </form>
+
+    </main>
+
+    <!-- Barra flotante móvil -->
+    <div class="sticky-bottom-bar">
+        <button type="button" class="btn-whatsapp" onclick="copyForWhatsApp()">
+            <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i>
+            <span>Copiar para WhatsApp</span>
+        </button>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast">
+        <i id="toastIcon" class="fa-solid fa-circle-check" style="color: #34D399; font-size: 1.2rem;"></i>
+        <span id="toastMsg">Mensaje...</span>
+    </div>
+
+    <script>
+        function getFormData() {
+            const form = document.getElementById('evaluationForm');
+            const formData = new FormData(form);
+
+            const q9Checked = [];
+            document.querySelectorAll('input[name="q9_items"]:checked').forEach(cb => q9Checked.push(cb.value));
+
+            return {
+                fecha: new Date().toLocaleString('es-CO'),
+                rol: formData.get('rol') || '',
+                nombre: formData.get('nombre') || '',
+                conyuge: formData.get('conyuge') || '',
+                q1_jerarquia: formData.get('q1_jerarquia') || '',
+                q1_propia: formData.get('q1_propia') || '',
+                q2: formData.get('q2') || '',
+                q3_esposa: formData.get('q3_esposa') || '',
+                q4_esposo: formData.get('q4_esposo') || '',
+                q4_propia: formData.get('q4_propia') || '',
+                q5_vacilacion: formData.get('q5_vacilacion') || '',
+                q5_excusa: formData.get('q5_excusa') || '',
+                q6: formData.get('q6') || '',
+                q7: formData.get('q7') || '',
+                q8: formData.get('q8') || '',
+                q9_items: q9Checked.join('\n   • ')
+            };
+        }
+
+        function validateForm(data) {
+            if (!data.rol) {
+                showToast("Por favor seleccione si es Esposo o Esposa.", "error");
+                return false;
+            }
+            if (!data.nombre.trim()) {
+                showToast("Por favor ingrese su Nombre Completo.", "error");
+                document.getElementById('nombre').focus();
+                return false;
+            }
+            if (!data.conyuge.trim()) {
+                showToast("Por favor ingrese el Nombre de su Cónyuge.", "error");
+                document.getElementById('conyuge').focus();
+                return false;
+            }
+            return true;
+        }
+
+        function copyForWhatsApp() {
+            const data = getFormData();
+            if (!validateForm(data)) return;
+
+            let text = `*GRUPO DE CONEXIÓN*\n`;
+            text += `*Iglesia El Lugar de Su Presencia*\n`;
+            text += `📖 *Capítulo 17: JERARQUÍA (Amor y Respeto)*\n`;
+            text += `──────────────────────\n`;
+            text += `👤 *Participante:* ${data.nombre} (${data.rol})\n`;
+            text += `💍 *Cónyuge:* ${data.conyuge}\n`;
+            text += `📅 *Fecha:* ${data.fecha}\n`;
+            text += `──────────────────────\n\n`;
+            text += `*RESPUESTAS:*\n\n`;
+            text += `*1. Jerarquía en el matrimonio:*\n   • Opción: ${data.q1_jerarquia || 'S/R'}\n   • Yo pienso: ${data.q1_propia || 'S/R'}\n\n`;
+            text += `*2. Jerarquía según Efesios 5:22-23:* ${data.q2 || 'S/R'}\n\n`;
+            text += `*3. Rol de cabeza (Esposa):* ${data.q3_esposa || 'S/R'}\n\n`;
+            text += `*4. Posición de cabeza (Esposo):*\n   • Opción: ${data.q4_esposo || 'S/R'}\n   • Yo pienso: ${data.q4_propia || 'S/R'}\n\n`;
+            text += `*5. Vacilación de la Esposa:*\n   • Opción: ${data.q5_vacilacion || 'S/R'}\n   • Excusa: ${data.q5_excusa || 'S/R'}\n\n`;
+            text += `*6. Desinflar con cinco palabras:* ${data.q6 || 'S/R'}\n\n`;
+            text += `*7. Pregunta de Amor y Respeto:* ${data.q7 || 'S/R'}\n\n`;
+            text += `*8. Tarjeta para el Esposo:* ${data.q8 || 'S/R'}\n\n`;
+            text += `*9. Consejos de Proteger y Proveer:*\n   • ${data.q9_items || 'Ninguna seleccionada'}\n\n`;
+            text += `*Principio Bíblico:* "El Respeto incondicional para el Esposo no es arrogancia; el Respeto es su lenguaje de Amor."`;
+
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+
+            showToast("¡Respuestas copiadas! Pégalas en el chat de tu Grupo de 4 en WhatsApp.", "success");
+        }
+
+        function showToast(msg, type = "success") {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.innerText = msg;
+            if (type === "success") {
+                toastIcon.className = "fa-solid fa-circle-check";
+                toastIcon.style.color = "#34D399";
+            } else if (type === "error") {
+                toastIcon.className = "fa-solid fa-triangle-exclamation";
+                toastIcon.style.color = "#F87171";
+            } else {
+                toastIcon.className = "fa-solid fa-circle-info";
+                toastIcon.style.color = "#60A5FA";
+            }
+
+            toast.style.display = "flex";
+            setTimeout(() => { toast.style.display = "none"; }, 4000);
+        }
+    </script>
+</body>
+</html>
